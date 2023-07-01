@@ -1,0 +1,110 @@
+<link rel="stylesheet" href="/css/product.style.css" />
+<div class="main-container">
+	<div id="custom-target"></div>
+	<div class="product-card-main-container">
+		<div class="list-header">
+			<div class="list-title">
+				<a href="/">Productos </a>
+				/ Producto
+			</div>
+			<div class="profile-header">
+				<div class="greeting-container">
+					<p class="profile-greeting">Hola,
+						<span class="profile-user-name"> {{user.first_name}}</span>
+					</p>
+				</div>
+				<div class="profile-icons">
+					{{#if user.isAdmin}}
+						<a
+							title="Cargar nuevo producto"
+							class="profile-icon open-modal-btn disabled"
+							{{!-- id="{{user.email}}" --}}
+							alt="Cargar nuevo producto"
+						>
+							<i class="fas fa-upload fa-lg"></i>
+						</a>
+					{{else}}
+						<a
+							title="Ver carrito"
+							class="profile-cart profile-icon"
+							href="/cart/{{user.cart._id}}"
+							alt="View cart"
+							id={{user.cart._id}}
+						>
+							<i class="fas fa-shopping-cart fa-lg"></i>
+							{{#if user.cartCount}}
+								<span id="lblCartCount1" class="cart-badge badge-warning">
+									{{user.cartCount}}
+								</span>
+							{{else}}
+								<span
+									id="lblCartCount2"
+									class="cart-badge badge-warning hidden"
+								>
+									0
+								</span>
+							{{/if}}
+						</a>
+					{{/if}}
+					<a
+						title="Ver perfil"
+						class="profile-view profile-icon"
+						href="/profile"
+						alt="View profile"
+					>
+						<i class="fas fa-user fa-lg"></i>
+					</a>
+					<a
+						title="Salir"
+						id="{{user.email}}"
+						class="profile-logout profile-icon"
+						href="/logout"
+						alt="Logout"
+					>
+						<i class="fas fa-sign-out-alt fa-lg"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="list-container" id="{{cartId}}">
+			<div class="product-card">
+				<div class="product-card-header">
+					<div class="product-card-details">
+						<div class="product-card-title">{{product.title}}</div>
+						<div class="product-card-category"> {{product.category}}</div>
+					</div>
+					<div class="product-card-details">
+						<div class="product-card-code">Cod: {{product.code}}</div>
+					</div>
+				</div>
+				<div class="product-card-body">
+					<div class="product-card-description">{{product.description}}</div>
+					<div class="product-card-other-info">
+						<div class="product-card-price">$ {{product.price}}</div>
+						<div class="product-card-stock">Stock:
+							{{product.stock}}
+							unidades</div>
+					</div>
+				</div>
+				<div class="product-card-thumbnails">
+					{{! thumbnails of the product }}
+					{{#each product.thumbnails}}
+						<div class="product-card-thumbnail">
+							<img src="{{this}}" alt="" />
+						</div>
+					{{else}}
+						<div class="no-image">Sin imágenes</div>
+					{{/each}}
+				</div>
+				<div class="product-card-footer">
+					<form id={{product._id}} class="add-form">
+						<button type="submit" form={{product._id}} class="add-btn btn">
+							Agregar
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/js/product.js"></script>

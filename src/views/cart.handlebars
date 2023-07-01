@@ -1,0 +1,171 @@
+<link rel="stylesheet" href="/css/product.style.css" />
+<link rel="stylesheet" href="/css/cart.style.css" />
+<div class="main-container">
+	<div id="custom-target"></div>
+	<div class="cart-main-container">
+		<div class="list-header">
+			<div class="list-title">
+				<a href="/">Productos </a>
+				/ Carrito
+			</div>
+			<div class="profile-header">
+				<div class="greeting-container">
+					<p class="profile-greeting">Hola,
+						<span class="profile-user-name"> {{user.first_name}}</span>
+					</p>
+				</div>
+				<div class="profile-icons">
+					{{#if user.isAdmin}}
+						<a
+							title="Cargar nuevo producto"
+							class="profile-icon open-modal-btn"
+							{{!-- id="{{user.email}}" --}}
+							alt="Cargar nuevo producto"
+						>
+							<i class="fas fa-upload fa-lg"></i>
+						</a>
+					{{else}}
+						<a
+							title="Ver carrito"
+							class="profile-cart profile-icon"
+							href="/cart/{{user.cart._id}}"
+							alt="View cart"
+							id={{user.cart._id}}
+						>
+							<i class="fas fa-shopping-cart fa-lg"></i>
+							{{#if user.cartCount}}
+								<span id="lblCartCount1" class="cart-badge badge-warning">
+									{{user.cartCount}}
+								</span>
+							{{else}}
+								<span
+									id="lblCartCount2"
+									class="cart-badge badge-warning hidden"
+								>
+									0
+								</span>
+							{{/if}}
+						</a>
+					{{/if}}
+					<a
+						title="Ver perfil"
+						class="profile-view profile-icon"
+						href="/profile"
+						alt="View profile"
+					>
+						<i class="fas fa-user fa-lg"></i>
+					</a>
+					<a
+						title="Salir"
+						id="{{user.email}}"
+						class="profile-logout profile-icon"
+						href="/logout"
+						alt="Logout"
+					>
+						<i class="fas fa-sign-out-alt fa-lg"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="list-container" id="{{cartId}}">
+			<div class="cart-products-container">
+				{{#each products}}
+					<div class="product-card" id={{this.product._id}}>
+						<div class="product-card-header">
+							<div class="product-card-details">
+								<div class="product-card-title">{{this.product.title}}</div>
+								<div class="product-card-category">
+									{{this.product.category}}
+								</div>
+							</div>
+							<div class="product-card-details">
+								<div class="product-card-price">
+									$&nbsp;<div class="product-card-price-value">
+										{{this.product.price}}
+									</div><sup>c/u</sup>
+								</div>
+								<div class="product-card-category">Cod:
+									{{this.product.code}}</div>
+							</div>
+						</div>
+						<div class="product-card-thumbnails">
+							{{! thumbnails of the product }}
+							{{#each this.product.thumbnails}}
+								<div class="product-card-thumbnail">
+									<img src="{{this}}" alt="" />
+								</div>
+							{{else}}
+								<div class="no-image">Sin imágenes</div>
+							{{/each}}
+						</div>
+						<div class="product-card-body">
+							<div class="product-card-quantity">
+								<div class="product-card-quantity-control">
+									<div class="decrement-btn circle-btn">
+										<i class="fas fa-minus"></i>
+									</div>
+									<div class="product-card-quantity-value">
+										{{this.quantity}}
+									</div>
+									<div class="increment-btn circle-btn">
+										<i class="fas fa-plus"></i>
+									</div>
+								</div>
+								<div class="product-card-total">
+									<div class="product-card-total-label">
+										Subtotal: $&nbsp;
+									</div>
+									<div class="product-card-total-value">
+										{{formatNumber this.subTotal}}
+									</div>
+								</div>
+								<form
+									id="delete-{{this.product._id}}"
+									class="remove-products-form"
+								>
+									<button
+										type="submit"
+										form="delete-{{this.product._id}}"
+										class="remove-products-btn btn"
+									>
+										<i class="fas fa-trash"></i>
+									</button>
+								</form>
+							</div>
+						</div>
+						<div class="product-card-footer">
+							<div class="product-card-total"></div>
+						</div>
+					</div>
+				{{else}}
+					<div class="no-products">El carrito está vacío.</div>
+				{{/each}}
+			</div>
+			<div class="footer">
+				{{#if products}}
+					<div class="cart-total-price-container">
+						<div class="cart-total-price-label"> Total:</div>
+						<div class="cart-total-price">
+							$&nbsp;<div class="cart-total-price-value">
+								{{formatNumber totalPrice}}
+							</div>
+						</div>
+					</div>
+					<div class="purchase-buttons">
+						<div class="cancel-btn">
+							<a href="/" class="btn btn-dark-blue large-btn">
+								<i class="fas fa-arrow-left"></i>
+								&nbsp;Volver
+							</a>
+						</div>
+						<div class="purchase-btn btn large-btn add-btn">
+							<i class="fas fa-credit-card"></i>
+							&nbsp;Finalizar
+						</div>
+					</div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/js/cart.js"></script>
