@@ -1,5 +1,3 @@
-import { cartsModel } from "../models/carts.model.js";
-import { productModel } from "../models/products.model.js";
 import { ticketsModel } from "../models/tickets.model.js";
 import { ObjectId } from "mongodb";
 

@@ -1,5 +1,4 @@
-import { productsService } from "../services/products.service.js";
-import { cartsService } from "../services/carts.service.js";
+import { productsService, cartsService } from "../services/index.js";
 import { generateProduct } from "../utils.js";
 import CustomError from "../services/errors/CustomError.js";
 import EErrors from "../services/errors/enum.js";

@@ -1,6 +1,6 @@
 import { productsRepository } from "../repositories/index.js";
 
-class ProductsService {
+export default class ProductsService {
 	constructor() {}
 
 	getProducts = async (limit, page, category, status, sort) => {

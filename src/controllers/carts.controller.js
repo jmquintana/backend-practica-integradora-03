@@ -1,5 +1,4 @@
-import { cartsService } from "../services/carts.service.js";
-import { ticketsService } from "../services/tickets.service.js";
+import { cartsService, ticketsService } from "../services/index.js";
 import { success, error, validation } from "../api.responser.js";
 
 export async function renderCartById(req, res) {

@@ -4,7 +4,7 @@ import {
 	productsRepository,
 } from "../repositories/index.js";
 
-class TicketsService {
+export default class TicketsService {
 	constructor() {}
 
 	createTicket = (userId, amount) => {
@@ -153,5 +153,3 @@ class TicketsService {
 		}
 	};
 }
-
-export const ticketsService = new TicketsService();

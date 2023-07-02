@@ -1,7 +1,8 @@
 import { emailTemplates } from "../templates/email.js";
 import { mailingService } from "./mailing.service.js";
+import { usersRepository } from "../repositories/index.js";
 
-class UserService {
+export default class UserService {
 	constructor(mailService) {
 		this.mailService = mailService;
 	}
@@ -10,9 +11,8 @@ class UserService {
 		try {
 			const user = await usersRepository.getUser({ email });
 			if (!user) throw new Error(`Something went wrong`);
-
-			const userDTO = new UserDTO(user);
-			const { name } = userDTO;
+			console.log(user);
+			const { first_name } = user;
 
 			const token = jwt.sign({ email }, JWT_SECRET, {
 				expiresIn: "1h",
@@ -21,8 +21,8 @@ class UserService {
 
 			const mail = {
 				to: email,
-				subject: `Your password restore, ${name}!`,
-				html: emailTemplates.passwordRestoreEmail(email, name, token),
+				subject: `Your password restore, ${first_name}!`,
+				html: emailTemplates.passwordRestoreEmail(email, first_name, token),
 			};
 
 			await this.mailService.sendEmail(mail);
@@ -64,5 +64,3 @@ class UserService {
 		}
 	}
 }
-
-export const userService = new UserService(mailingService);

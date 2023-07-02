@@ -1,7 +1,6 @@
-import { productsRepository, cartsRepository } from "../repositories/index.js";
-import { ticketsService } from "./tickets.service.js";
+import { cartsRepository } from "../repositories/index.js";
 
-class CartsService {
+export default class CartsService {
 	constructor() {}
 
 	getCarts = async () => {
@@ -88,5 +87,3 @@ class CartsService {
 		return result;
 	};
 }
-
-export const cartsService = new CartsService();

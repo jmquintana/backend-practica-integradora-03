@@ -1,5 +1,4 @@
 import { productModel } from "../models/products.model.js";
-import { ObjectId } from "mongodb";
 
 export default class ProductsRepository {
 	constructor() {}

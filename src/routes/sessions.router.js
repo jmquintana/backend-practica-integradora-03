@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { userModel } from "../models/users.model.js";
+import { usersModel } from "../models/users.model.js";
 import { createHash, isValidPassword } from "../utils.js";
 import passport from "passport";
 
@@ -45,8 +45,9 @@ sessionsRouter.get("/failLogin", (req, res) => {
 sessionsRouter.put("/restore", async (req, res) => {
 	try {
 		const { email, password } = req.body;
+		console.log({ email, password });
 
-		const user = await userModel.findOne({ email });
+		const user = await usersModel.findOne({ email });
 		if (!user) {
 			return res
 				.status(404)
@@ -55,7 +56,7 @@ sessionsRouter.put("/restore", async (req, res) => {
 
 		const hashedPassword = createHash(password);
 
-		await userModel.updateOne({ email }, { password: hashedPassword });
+		await usersModel.updateOne({ email }, { password: hashedPassword });
 
 		return res.send({
 			status: "Success",

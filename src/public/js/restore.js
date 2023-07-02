@@ -10,8 +10,8 @@ form.addEventListener("submit", async (e) => {
 	console.log(obj);
 
 	try {
-		await fetch("/api/sessions/restore", {
-			method: "PUT",
+		await fetch("/api/users/restore", {
+			method: "POST",
 			body: JSON.stringify(obj),
 			header: {
 				"Content-Type": "application/json",

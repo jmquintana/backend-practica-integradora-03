@@ -1,4 +1,4 @@
-import { userService } from "../services/users.service.js";
+import { usersService } from "../services/index.js";
 
 export const restorePasswordProcess = async (req, res) => {
 	try {
@@ -11,7 +11,7 @@ export const restorePasswordProcess = async (req, res) => {
 			});
 		}
 
-		await userService.restorePasswordProcess(email);
+		await usersService.restorePasswordProcess(email);
 
 		return res.status(200).send({
 			status: "success",
@@ -34,7 +34,7 @@ export const updatePassword = async (req, res) => {
 			});
 		}
 
-		const passwordUpdate = await userService.updatePassword(token, password);
+		const passwordUpdate = await usersService.updatePassword(token, password);
 
 		if (!passwordUpdate) {
 			return res

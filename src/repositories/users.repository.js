@@ -1,9 +1,21 @@
+import { usersModel } from "../models/users.model.js";
+import { ObjectId } from "mongodb";
+
 export default class UsersRepository {
 	constructor() {}
 	getUsers = async () => {
 		try {
 			const users = await usersModel.find();
 			return users;
+		} catch (error) {
+			console.log(error);
+			return error;
+		}
+	};
+	getUser = async ({ email }) => {
+		try {
+			const user = await usersModel.findOne({ email });
+			return user;
 		} catch (error) {
 			console.log(error);
 			return error;
