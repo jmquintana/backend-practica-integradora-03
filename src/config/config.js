@@ -11,6 +11,12 @@ const config = {
 	CLIENT_ID: process.env.CLIENT_ID,
 	CALLBACK_URL: process.env.CALLBACK_URL,
 	ENV: process.env.NODE_ENV,
+	nodemailer: {
+		service: process.env.NM_SERVICE,
+		port: process.env.NM_PORT,
+		user: process.env.NM_USER,
+		password: process.env.NM_PASSWORD,
+	},
 };
 
 export default config;

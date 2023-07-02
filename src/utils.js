@@ -4,7 +4,7 @@ import { dirname } from "path";
 import bcrypt from "bcrypt";
 import { faker } from "@faker-js/faker";
 import winston from "winston";
-import config from "./config.js";
+import config from "./config/config.js";
 // faker.locale = "es";
 
 export const generateUser = () => {

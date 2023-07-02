@@ -85,7 +85,7 @@ logOutBtn.addEventListener("click", async (e) => {
 });
 
 const getRandProduct = new Promise((resolve, reject) => {
-	fetch("/api/products/mockingproduct")
+	fetch("/api/products/mocking/product/")
 		.then((res) => res.json())
 		.then((data) => {
 			resolve(data.payload);
@@ -96,7 +96,7 @@ const getRandProduct = new Promise((resolve, reject) => {
 });
 
 const getRandomProduct = async () => {
-	return await fetch("/api/products/mockingproduct")
+	return await fetch("/api/products/mocking/product/")
 		.then((res) => res.json())
 		.then((data) => data.payload)
 		.catch((err) => console.log(err));

@@ -4,7 +4,7 @@ import { userModel } from "../models/users.model.js";
 import { cartsService } from "../services/carts.service.js";
 import { createHash, isValidPassword } from "../utils.js";
 import GitHubStrategy from "passport-github2";
-import config from "../config.js";
+import config from "../config/config.js";
 
 const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } = config;
 

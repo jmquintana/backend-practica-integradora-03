@@ -1,7 +1,7 @@
 import { productModel } from "../models/products.model.js";
 import { ObjectId } from "mongodb";
 
-class ProductsRepository {
+export default class ProductsRepository {
 	constructor() {}
 
 	getProducts = async (limit, page, category, status, sort) => {
@@ -45,7 +45,9 @@ class ProductsRepository {
 	};
 
 	getProductById = async (productId) => {
-		if (productId.match(/^[0-9a-fA-F]{24}$/)) {
+		console.log(productId);
+
+		if (productId.toString().match(/^[0-9a-fA-F]{24}$/)) {
 			console.log("Yes, it's a valid ObjectId, proceed with `findById` call.");
 			try {
 				const result = await productModel.find({ _id: productId }).lean();
@@ -89,5 +91,3 @@ class ProductsRepository {
 		}
 	};
 }
-
-export const productsRepository = new ProductsRepository();

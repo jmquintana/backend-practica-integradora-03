@@ -1,4 +1,4 @@
-import { productsRepository } from "../repositories/products.repository.js";
+import { productsRepository } from "../repositories/index.js";
 
 class ProductsService {
 	constructor() {}

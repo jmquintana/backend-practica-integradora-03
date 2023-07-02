@@ -13,7 +13,7 @@ import socket from "./socket.js";
 // import sessionsRouter from "./routes/sessions.router.js";
 import routerAPI from "./routes/routes.js";
 import __dirname from "./utils.js";
-import config from "./config.js";
+import config from "./config/config.js";
 import { addLogger } from "./middlewares/logger.js";
 import { logger } from "./utils.js";
 

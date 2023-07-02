@@ -3,7 +3,7 @@ import { productModel } from "../models/products.model.js";
 import { ticketsModel } from "../models/tickets.model.js";
 import { ObjectId } from "mongodb";
 
-class TicketsRepository {
+export default class TicketsRepository {
 	constructor() {}
 
 	getTickets = async () => {
@@ -38,5 +38,3 @@ class TicketsRepository {
 		}
 	};
 }
-
-export const ticketsRepository = new TicketsRepository();

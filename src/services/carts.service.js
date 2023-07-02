@@ -1,5 +1,4 @@
-import { cartsRepository } from "../repositories/carts.repository.js";
-import { productsRepository } from "../repositories/products.repository.js";
+import { productsRepository, cartsRepository } from "../repositories/index.js";
 import { ticketsService } from "./tickets.service.js";
 
 class CartsService {

@@ -55,7 +55,7 @@
 .login-form-body {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	align-items: center;
 	padding: 1rem;
 	min-height: 10rem;
@@ -135,13 +135,18 @@
 	align-items: center;
 }
 
-.have-not-account {
+.other-options {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	color: var(--D-color);
 	font-size: 1rem;
 	font-weight: 600;
+}
+
+.other-options p {
+	margin-bottom: 0.2rem;
 }
 
 .login-form-footer {

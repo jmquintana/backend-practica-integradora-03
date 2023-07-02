@@ -2,7 +2,7 @@ import { cartsModel } from "../models/carts.model.js";
 import { productModel } from "../models/products.model.js";
 import { ObjectId } from "mongodb";
 
-class CartsRepository {
+export default class CartsRepository {
 	constructor() {}
 
 	getCarts = async () => {
@@ -194,5 +194,3 @@ class CartsRepository {
 		}
 	};
 }
-
-export const cartsRepository = new CartsRepository();

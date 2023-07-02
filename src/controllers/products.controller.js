@@ -1,23 +1,8 @@
 import { productsService } from "../services/products.service.js";
 import { cartsService } from "../services/carts.service.js";
 import { generateProduct } from "../utils.js";
-
 import CustomError from "../services/errors/CustomError.js";
 import EErrors from "../services/errors/enum.js";
-import { generateProductErrorInfo } from "../services/errors/info.js";
-
-// export async function getProducts(req, res) {
-// 	const { limit, page, category, status, sort } = req.query;
-// 	const products = productsService.getProducts(
-// 		limit,
-// 		page,
-// 		category,
-// 		status,
-// 		sort
-// 	);
-
-// 	return res.send({ status: "Success", payload: products });
-// }
 
 export async function getProducts(req, res) {
 	let { user } = req.session;
