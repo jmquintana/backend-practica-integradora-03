@@ -10,17 +10,17 @@ form.addEventListener("submit", async (e) => {
 	console.log(obj);
 
 	try {
-		await fetch("/api/sessions/login", {
+		await fetch("/api/users/login", {
 			method: "POST",
 			body: JSON.stringify(obj),
 			header: {
 				"Content-Type": "application/json",
 			},
 		}).then((res) => {
-			if (res.status === 200) {
+			if (res.ok) {
 				window.location.href = "/";
 			} else {
-				setTimeout(() => (window.location.href = "/register"), 1500);
+				// setTimeout(() => (window.location.href = "/register"), 1500);
 				const error = new Error(res.error);
 				throw error;
 			}

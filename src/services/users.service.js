@@ -7,7 +7,37 @@ export default class UserService {
 		this.mailService = mailService;
 	}
 
-	async restorePasswordProcess(email) {
+	getUserById = async (id) => {
+		try {
+			const user = await usersRepository.getUserById(id);
+			return user;
+		} catch (error) {
+			console.log();
+			return null;
+		}
+	};
+
+	getUser = async ({ email }) => {
+		try {
+			const user = await usersRepository.getUser({ email });
+			return user;
+		} catch (error) {
+			console.log();
+			return null;
+		}
+	};
+
+	createUser = async (user) => {
+		try {
+			const user = await usersRepository.createUser(user);
+			return user;
+		} catch (error) {
+			console.log();
+			return null;
+		}
+	};
+
+	restorePasswordProcess = async (email) => {
 		try {
 			const user = await usersRepository.getUser({ email });
 			if (!user) throw new Error(`Something went wrong`);
@@ -31,9 +61,9 @@ export default class UserService {
 			console.log(`Failed to send email: ${error}`);
 			throw error;
 		}
-	}
+	};
 
-	async updatePassword(token, password) {
+	updatePassword = async (token, password) => {
 		try {
 			const decodedToken = jwt.verify(token, JWT_SECRET, {
 				ignoreExpiration: true,
@@ -62,5 +92,5 @@ export default class UserService {
 			console.log(`Failed to update password: ${error}`);
 			throw error;
 		}
-	}
+	};
 }

@@ -57,7 +57,7 @@ export async function getProducts(req, res) {
 }
 
 export async function renderPaginatedProducts(req, res) {
-	let { user } = req.session;
+	const { user } = req;
 	const { limit, page, category, status, sort } = req.query;
 	const filters = {};
 	const options = {
@@ -66,10 +66,13 @@ export async function renderPaginatedProducts(req, res) {
 		lean: true,
 	};
 
-	user.isAdmin = user?.role === "admin";
+	if (!!user) {
+		user.isAdmin = user?.role === "admin";
+		user.isGuest = user?.role === "guest";
 
-	if (user.cart)
-		user.cartCount = await cartsService.getCartCount(user.cart._id);
+		if (user.cart)
+			user.cartCount = await cartsService.getCartCount(user.cart._id);
+	}
 
 	if (category) {
 		filters.category = category;
@@ -117,7 +120,7 @@ export async function renderProduct(req, res) {
 	const productId = req.params.pid;
 	const cartId = req.session.user?.cart?._id || "";
 	result.cartId = cartId;
-	const user = req.session.user || "guest";
+	const user = req.user;
 	result.user = user;
 	const product = await productsService.getProductById(productId);
 	result.product = product;

@@ -15,21 +15,28 @@ import {
 	editProductQuantity,
 	renderCarts,
 } from "../controllers/carts.controller.js";
+import { passportCall, handlePolicies } from "../middlewares/authorization.js";
 
 const viewsRouter = Router();
 
-viewsRouter.get("/", checkLogin, renderPaginatedProducts);
-viewsRouter.get("/carts", checkAdmin, renderCarts);
-viewsRouter.get("/product/:pid", renderProduct);
+viewsRouter.get("/", passportCall("jwt"), renderPaginatedProducts);
+
+viewsRouter.get(
+	"/carts",
+	passportCall("jwt"),
+	handlePolicies(["admin"]),
+	renderCarts
+);
+viewsRouter.get("/product/:pid", passportCall("jwt"), renderProduct);
 viewsRouter.put("/:cid", editProductQuantity);
-viewsRouter.get("/cart/:cid", checkLogin, renderCartById);
+viewsRouter.get("/cart/:cid", passportCall("jwt"), renderCartById);
 viewsRouter.get("/register", checkRegistered, (req, res) => {
 	res.render("register");
 });
 viewsRouter.get("/login", checkSession, (req, res) => {
 	res.render("login");
 });
-viewsRouter.get("/profile", checkLogin, (req, res) => {
+viewsRouter.get("/profile", passportCall("jwt"), (req, res) => {
 	res.render("profile", { user: req.session.user });
 });
 viewsRouter.get("/restore", (req, res) => {

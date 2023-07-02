@@ -1,14 +1,35 @@
 import passport from "passport";
 import local from "passport-local";
+import jwt from "passport-jwt";
 import { usersModel } from "../models/users.model.js";
 import { cartsService } from "../services/index.js";
 import { createHash, isValidPassword } from "../utils.js";
 import GitHubStrategy from "passport-github2";
-import config from "../config/config.js";
+import config from "./config.js";
 
-const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } = config;
-
+const {
+	githubAuth: { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL },
+	jwt: { cookieName, secret },
+} = config;
 const LocalStrategy = local.Strategy;
+const JWTStrategy = jwt.Strategy;
+const ExtractJwt = jwt.ExtractJwt;
+
+console.log({ cookieName, secret });
+
+const cookieExtractor = (req) => {
+	let token = null;
+	if (req && req.cookies) {
+		token = req.cookies[cookieName];
+	}
+	return token;
+};
+
+const jwtOptions = {
+	secretOrKey: secret,
+	jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+};
+
 const initializePassport = () => {
 	passport.use(
 		"register",
@@ -52,6 +73,18 @@ const initializePassport = () => {
 	);
 
 	passport.use(
+		"jwt",
+		new JWTStrategy(jwtOptions, async (jwt_payload, done) => {
+			try {
+				return done(null, jwt_payload);
+			} catch (error) {
+				return done(error);
+			}
+		})
+	);
+
+	// DUPLICATED
+	passport.use(
 		"login",
 		new LocalStrategy(
 			{ usernameField: "email" },
@@ -70,6 +103,40 @@ const initializePassport = () => {
 		)
 	);
 
+	passport.use(
+		"github",
+		new GitHubStrategy(
+			{
+				clientID: CLIENT_ID,
+				clientSecret: CLIENT_SECRET,
+				callbackURL: CALLBACK_URL,
+			},
+			async (accessToken, refreshToken, profile, done) => {
+				try {
+					let user = await userModel.findOne({ email: profile._json.email });
+					if (!user) {
+						const cart = await cartsModel.create({});
+						let newUser = {
+							first_name: profile._json.name,
+							last_name: "",
+							age: 18,
+							email: profile._json.email,
+							password: "",
+							cart: cart._id,
+						};
+
+						let result = await userModel.create(newUser);
+						return done(null, result);
+					}
+
+					return done(null, user);
+				} catch (error) {
+					return done(error);
+				}
+			}
+		)
+	);
+
 	passport.serializeUser((user, done) => {
 		done(null, user._id);
 	});
@@ -79,6 +146,7 @@ const initializePassport = () => {
 		done(null, user);
 	});
 
+	// DUPLICATED
 	passport.use(
 		"githublogin",
 		new GitHubStrategy(

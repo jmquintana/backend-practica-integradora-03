@@ -5,17 +5,14 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import morgan from "morgan";
 import passport from "passport";
-import initializePassport from "./auth/passport.js";
+import initializePassport from "./config/passport.js";
 import socket from "./socket.js";
-// import productsRouter from "./routes/products.router.js";
-// import cartsRouter from "./routes/carts.router.js";
-// import viewsRouter from "./routes/views.router.js";
-// import sessionsRouter from "./routes/sessions.router.js";
 import routerAPI from "./routes/routes.js";
 import __dirname from "./utils.js";
 import config from "./config/config.js";
 import { addLogger } from "./middlewares/logger.js";
 import { logger } from "./utils.js";
+import cookieParser from "cookie-parser";
 
 // Initialization
 const { DB_USER, DB_PASS, DB_NAME, DB_URL, SESSION_SECRET } = config;
@@ -36,7 +33,7 @@ hbs.handlebars.registerHelper("formatNumber", function (number) {
 });
 
 // MiddleWares
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use(
 	express.json({
 		type: ["application/json", "text/plain"],
