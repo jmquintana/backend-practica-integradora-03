@@ -15,8 +15,6 @@ const LocalStrategy = local.Strategy;
 const JWTStrategy = jwt.Strategy;
 const ExtractJwt = jwt.ExtractJwt;
 
-console.log({ cookieName, secret });
-
 const cookieExtractor = (req) => {
 	let token = null;
 	if (req && req.cookies) {
@@ -42,7 +40,6 @@ const initializePassport = () => {
 				try {
 					const { first_name, last_name, email, age, role } = req.body;
 					let user = await usersModel.findOne({ email: username });
-					console.log("passport linea 24", { user });
 					if (user) {
 						console.log("User already exists");
 						return done(null, false);

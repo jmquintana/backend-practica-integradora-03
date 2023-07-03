@@ -3,7 +3,7 @@ import { success, error, validation } from "../api.responser.js";
 
 export async function renderCartById(req, res) {
 	const cartId = req.params.cid;
-	const user = req.session.user || "guest";
+	const user = req.user;
 	const result = await cartsService.getCartById(cartId);
 	result.user = user;
 	return res.render("cart", result);
@@ -11,7 +11,7 @@ export async function renderCartById(req, res) {
 
 export async function renderCarts(req, res) {
 	const result = {};
-	const user = req.session.user || "guest";
+	const user = req.user;
 	result.carts = await cartsService.getCarts();
 	result.user = user;
 	return res.render("carts", result);

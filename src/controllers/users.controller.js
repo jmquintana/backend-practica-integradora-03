@@ -1,4 +1,4 @@
-import { usersService } from "../services/index.js";
+import { usersService, cartsService } from "../services/index.js";
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
 import { isValidPassword } from "../utils.js";
@@ -27,8 +27,6 @@ export const failRegister = async (req, res) => {
 export const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
-		console.log({ email, password });
-
 		const user = await usersService.getUser({ email });
 
 		if (!user)
@@ -41,6 +39,8 @@ export const login = async (req, res) => {
 				.status(401)
 				.send({ status: "Error", error: "Invalid Credentials" });
 
+		const cartCount = await cartsService.getCartCount(user.cart._id);
+
 		const jwtUser = {
 			first_name: user.first_name,
 			last_name: user.last_name,
@@ -48,9 +48,8 @@ export const login = async (req, res) => {
 			email: user.email,
 			cart: user.cart,
 			role: user.role,
+			cartCount,
 		};
-		console.log({ jwtUser });
-
 		const token = jwt.sign(jwtUser, secret, { expiresIn: "24h" });
 
 		return res.cookie(cookieName, token, { httpOnly: true }).send({
