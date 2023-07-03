@@ -39,7 +39,10 @@ export const login = async (req, res) => {
 				.status(401)
 				.send({ status: "Error", error: "Invalid Credentials" });
 
-		const cartCount = await cartsService.getCartCount(user.cart._id);
+		const cartCount =
+			user.role === "admin"
+				? 0
+				: await cartsService.getCartCount(user.cart._id);
 
 		const jwtUser = {
 			first_name: user.first_name,

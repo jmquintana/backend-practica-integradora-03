@@ -15,44 +15,6 @@
 					</p>
 				</div>
 				<div class="profile-icons">
-					{{#if user.isAdmin}}
-						<a
-							class="profile-icon carts-icon disabled"
-							alt="Ver todos los carritos"
-						>
-							<i class="fas fa-shopping-cart fa-lg"></i>
-						</a>
-						<a
-							title="Cargar nuevo producto"
-							class="profile-icon open-modal-btn disabled"
-							id="{{user.email}}"
-							alt="Cargar nuevo producto"
-						>
-							<i class="fas fa-upload fa-lg"></i>
-						</a>
-					{{else}}
-						<a
-							title="Ver carrito"
-							class="profile-cart profile-icon"
-							href="/cart/{{user.cart._id}}"
-							alt="View cart"
-							id={{user.cart._id}}
-						>
-							<i class="fas fa-shopping-cart fa-lg"></i>
-							{{#if user.cartCount}}
-								<span id="lblCartCount1" class="cart-badge badge-warning">
-									{{user.cartCount}}
-								</span>
-							{{else}}
-								<span
-									id="lblCartCount2"
-									class="cart-badge badge-warning hidden"
-								>
-									0
-								</span>
-							{{/if}}
-						</a>
-					{{/if}}
 					<a
 						title="Ver perfil"
 						class="profile-view profile-icon"

@@ -37,7 +37,7 @@ viewsRouter.get("/login", checkSession, (req, res) => {
 	res.render("login");
 });
 viewsRouter.get("/profile", passportCall("jwt"), (req, res) => {
-	res.render("profile", { user: req.session.user });
+	res.render("profile", { user: req.user });
 });
 viewsRouter.get("/restore", (req, res) => {
 	res.render("restore");
