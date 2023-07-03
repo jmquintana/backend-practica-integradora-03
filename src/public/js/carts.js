@@ -6,7 +6,7 @@ logOutBtn.addEventListener("click", async (e) => {
 	const email = logOutBtn.id;
 	console.log(email);
 	try {
-		await fetch("/api/sessions/logout", {
+		await fetch("/api/users/logout", {
 			method: "POST",
 			body: JSON.stringify({ username: email }),
 			header: {

@@ -10,7 +10,7 @@ form.addEventListener("submit", async (e) => {
 	console.log(obj);
 
 	try {
-		await fetch("/api/sessions/register", {
+		await fetch("/api/users/register", {
 			method: "POST",
 			body: JSON.stringify(obj),
 			header: {

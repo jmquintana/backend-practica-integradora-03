@@ -2,19 +2,33 @@ import { cartsService, ticketsService } from "../services/index.js";
 import { success, error, validation } from "../api.responser.js";
 
 export async function renderCartById(req, res) {
-	const cartId = req.params.cid;
-	const user = req.user;
-	const result = await cartsService.getCartById(cartId);
-	result.user = user;
-	return res.render("cart", result);
+	try {
+		const cartId = req.params.cid;
+		const user = req.user;
+		const result = await cartsService.getCartById(cartId);
+		result.user = user;
+		return res.render("cart", result);
+	} catch (error) {
+		return res.send({
+			status: "Error",
+			error: "Something went wrong while rendering cart",
+		});
+	}
 }
 
 export async function renderCarts(req, res) {
-	const result = {};
-	const user = req.user;
-	result.carts = await cartsService.getCarts();
-	result.user = user;
-	return res.render("carts", result);
+	try {
+		const result = {};
+		const user = req.user;
+		result.carts = await cartsService.getCarts();
+		result.user = user;
+		return res.render("carts", result);
+	} catch (error) {
+		return res.send({
+			status: "Error",
+			error: "Something went wrong while rendering carts",
+		});
+	}
 }
 
 export async function editProductQuantity(req, res) {
@@ -28,13 +42,15 @@ export async function editProductQuantity(req, res) {
 			newQuantity
 		);
 		// return res.send({ status: "Success", result });
-		return res.send(
-			success("Product quantity updated successfully", result, 200)
-		);
+		return res.send({
+			status: "Success",
+			result,
+		});
 	} catch (err) {
-		return res.send(
-			error("Something went wrong while updating product quantity", 500)
-		);
+		return res.send({
+			status: "Error",
+			error: "Something went wrong while editing product quantity",
+		});
 	}
 }
 
@@ -93,7 +109,7 @@ export async function deleteCart(req, res) {
 
 export async function handlePurchase(req, res) {
 	const cartId = req.params.cid;
-	const userId = req.session.user.email;
+	const userId = req.user.email;
 	const result = await ticketsService.handlePurchase(cartId, userId);
 	return res.send(result);
 }

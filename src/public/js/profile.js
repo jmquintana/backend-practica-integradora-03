@@ -9,7 +9,7 @@ logOutBtn.addEventListener("click", async (e) => {
 		.querySelector(".profile-panel-body-value").innerText;
 	console.log(email);
 	try {
-		await fetch("/api/sessions/logout", {
+		await fetch("/api/users/logout", {
 			method: "POST",
 			body: JSON.stringify({ username: email }),
 			header: {

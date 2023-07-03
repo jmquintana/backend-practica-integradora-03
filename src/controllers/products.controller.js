@@ -118,7 +118,7 @@ export async function getProductById(req, res) {
 export async function renderProduct(req, res) {
 	const result = {};
 	const productId = req.params.pid;
-	const cartId = req.session.user?.cart?._id || "";
+	const cartId = req.user?.cart?._id || "";
 	result.cartId = cartId;
 	const user = req.user;
 	result.user = user;
