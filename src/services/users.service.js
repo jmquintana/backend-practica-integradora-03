@@ -1,10 +1,16 @@
 import { emailTemplates } from "../templates/email.js";
-import { mailingService } from "./mailing.service.js";
 import { usersRepository } from "../repositories/index.js";
+import jwt from "jsonwebtoken";
+import config from "../config/config.js";
+import { isValidPassword, createHash } from "../utils.js";
+
+const {
+	jwt: { cookieName, secret },
+} = config;
 
 export default class UserService {
-	constructor(mailService) {
-		this.mailService = mailService;
+	constructor(mailingService) {
+		this.mailingService = mailingService;
 	}
 
 	getUserById = async (id) => {
@@ -44,7 +50,7 @@ export default class UserService {
 			console.log(user);
 			const { first_name } = user;
 
-			const token = jwt.sign({ email }, JWT_SECRET, {
+			const token = jwt.sign({ email }, secret, {
 				expiresIn: "1h",
 			});
 			if (!token) throw new Error("Auth token signing failed");
@@ -55,7 +61,7 @@ export default class UserService {
 				html: emailTemplates.passwordRestoreEmail(email, first_name, token),
 			};
 
-			await this.mailService.sendEmail(mail);
+			await this.mailingService.sendEmail(mail);
 			return;
 		} catch (error) {
 			console.log(`Failed to send email: ${error}`);
@@ -63,9 +69,13 @@ export default class UserService {
 		}
 	};
 
+	passwordValidate = async (user, password) => {
+		return isValidPassword(user, password);
+	};
+
 	updatePassword = async (token, password) => {
 		try {
-			const decodedToken = jwt.verify(token, JWT_SECRET, {
+			const decodedToken = jwt.verify(token, secret, {
 				ignoreExpiration: true,
 			});
 			const { email } = decodedToken;
@@ -74,17 +84,16 @@ export default class UserService {
 			}
 
 			const user = await usersRepository.getUser({ email });
-			const samePass = this.passwordValidate(user, password);
+			const samePass = await this.passwordValidate(user, password);
 			if (samePass)
 				throw new Error("Password must be different from the actual one.");
 
 			const hashedPassword = createHash(password);
 			if (!hashedPassword) throw new Error("Password hashing failed");
 
-			const passwordUpdate = await usersRepository.updateUser(
-				{ email },
-				{ password: hashedPassword }
-			);
+			const passwordUpdate = await usersRepository.updateUser(email, {
+				password: hashedPassword,
+			});
 			if (!passwordUpdate)
 				throw new Error(`Password update failed for ${email}`);
 			return passwordUpdate;

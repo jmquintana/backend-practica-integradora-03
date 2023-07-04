@@ -1,0 +1,57 @@
+<div class="main-container">
+	<div class="transparent" id="custom-target"></div>
+	<div class="login-main-container">
+		<div class="login-form-container">
+			<div class="login-form-header">
+				<div class="login-title">Restablecer contraseña</div>
+			</div>
+			<div class="login-form-body">
+				<form id="login-form">
+					<div class="login-form-input">
+						<label for="email">Email</label>
+						<input type="email" name="email" id="email" placeholder="Email" />
+					</div>
+					<div class="login-form-input">
+						<label for="new-password">Nueva contraseña</label>
+						<input
+							type="password"
+							name="password"
+							id="new-password"
+							placeholder="Nueva contraseña"
+							autocomplete="off"
+						/>
+					</div>
+					<div class="login-form-input">
+						<label for="new-password">Repetir contraseña</label>
+						<input
+							type="password"
+							{{! name="repeatPassword" }}
+							id="repeat-password"
+							placeholder="Repetir contraseña"
+							autocomplete="off"
+							onkeyup="check();"
+						/>
+					</div>
+				</form>
+				<div class="other-options">
+					<p>¿No tienes una cuenta?
+						<a href="/register">Registrarse</a></p>
+				</div>
+			</div>
+			<div class="login-form-footer">
+				<div class="login-form-submit">
+					<button
+						id="submit-btn"
+						class="btn add-btn large-btn"
+						type="submit"
+						form="login-form"
+					>
+						{{! <i class="fa-solid fa-arrows-rotate"></i> }}
+						&nbsp;Actualizar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/js/reset.js"></script>

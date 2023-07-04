@@ -158,3 +158,8 @@
 	overflow: hidden;
 	padding: 0.5rem;
 }
+
+#submit-btn:disabled {
+	background-color: #ccc;
+	pointer-events: none;
+}

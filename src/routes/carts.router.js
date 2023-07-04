@@ -11,37 +11,42 @@ import {
 	handlePurchase,
 } from "../controllers/carts.controller.js";
 import { checkAdmin, checkUser, checkSession } from "../middlewares/auth.js";
-import { passportCall } from "../middlewares/authorization.js";
+import { passportCall, handlePolicies } from "../middlewares/authorization.js";
 
 const cartsRouter = Router();
 
 cartsRouter.post("/", addCart);
-cartsRouter.get("/", passportCall("jwt"), checkAdmin, getCarts);
+cartsRouter.get("/", passportCall("jwt"), handlePolicies(["admin"]), getCarts);
 cartsRouter.get("/:cid", checkSession, getCartById);
 cartsRouter.post(
 	"/:cid/product/:pid",
 	passportCall("jwt"),
-	checkUser,
+	handlePolicies(["user"]),
 	addProductToCart
 );
-cartsRouter.put("/:cid", passportCall("jwt"), checkUser, updateCart);
+cartsRouter.put(
+	"/:cid",
+	passportCall("jwt"),
+	handlePolicies(["user"]),
+	updateCart
+);
 cartsRouter.delete(
 	"/:cid/product/:pid",
 	passportCall("jwt"),
-	checkUser,
+	handlePolicies(["user"]),
 	deleteProductFromCart
 );
 cartsRouter.delete(
 	"/:cid/allProducts/:pid",
 	passportCall("jwt"),
-	checkUser,
+	handlePolicies(["user"]),
 	deleteAllProductFromCart
 );
 cartsRouter.delete("/:cid", passportCall("jwt"), deleteCart);
 cartsRouter.post(
 	"/:cid/purchase",
 	passportCall("jwt"),
-	checkUser,
+	handlePolicies(["user"]),
 	handlePurchase
 );
 

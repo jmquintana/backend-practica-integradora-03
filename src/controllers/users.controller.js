@@ -118,6 +118,8 @@ export const updatePassword = async (req, res) => {
 	try {
 		const { password, token } = req.body;
 
+		console.log({ password, token });
+
 		if (!password || !token) {
 			return res.status(400).send({
 				status: "Error",

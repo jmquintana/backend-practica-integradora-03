@@ -15,7 +15,11 @@ import {
 	editProductQuantity,
 	renderCarts,
 } from "../controllers/carts.controller.js";
-import { passportCall, handlePolicies } from "../middlewares/authorization.js";
+import {
+	passportCall,
+	handlePolicies,
+	validateTokenJwt,
+} from "../middlewares/authorization.js";
 
 const viewsRouter = Router();
 
@@ -42,6 +46,9 @@ viewsRouter.get("/profile", passportCall("jwt"), (req, res) => {
 });
 viewsRouter.get("/restore", (req, res) => {
 	res.render("restore");
+});
+viewsRouter.get("/reset", validateTokenJwt, (req, res) => {
+	res.render("reset");
 });
 
 export default viewsRouter;

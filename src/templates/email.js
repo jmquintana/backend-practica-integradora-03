@@ -27,7 +27,7 @@ export const emailTemplates = {
                             </tr>
                             <tr>
                                 <td style="padding: 0 20px;">
-                                    <a href="http://localhost:3000/reset-password/${token}" style="background-color: #1a1a1a; color: #fff; display: inline-block; padding: 15px 25px; text-decoration: none;">Reset Password</a>
+                                    <a href="http://localhost:3000/reset?token=${token}" style="background-color: #1a1a1a; color: #fff; display: inline-block; padding: 15px 25px; text-decoration: none;">Reset Password</a>
                                 </td>
                             </tr>
                             <tr>

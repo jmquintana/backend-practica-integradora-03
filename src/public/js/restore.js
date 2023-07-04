@@ -18,7 +18,7 @@ form.addEventListener("submit", async (e) => {
 			},
 		}).then((res) => {
 			if (res.status === 200) {
-				window.location.href = "/";
+				// window.location.href = "/";
 			} else {
 				const error = new Error(res.error);
 				throw error;

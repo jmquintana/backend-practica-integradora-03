@@ -41,12 +41,9 @@ export default class UsersRepository {
 			return error;
 		}
 	};
-	updateUser = async (userId, user) => {
+	updateUser = async (email, user) => {
 		try {
-			const updatedUser = await usersModel.updateOne(
-				{ _id: new ObjectId(userId) },
-				user
-			);
+			const updatedUser = await usersModel.updateOne({ email }, user);
 			return updatedUser;
 		} catch (error) {
 			console.log(error);
